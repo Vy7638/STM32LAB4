@@ -1,0 +1,5 @@
+led.c:10:6:blinkyLed1	8	static
+led.c:13:6:blinkyLed2	8	static
+led.c:16:6:blinkyLed3	8	static
+led.c:19:6:blinkyLed4	8	static
+led.c:22:6:blinkyLed5	8	static
