@@ -9,6 +9,7 @@
 #define INC_SCHEDULER_H_
 
 #include "main.h"
+#include "led.h"
 #include "global.h"
 
 typedef struct {
@@ -32,8 +33,8 @@ sTask SCH_tasks_G[SCH_MAX_TASKS];
 void SCH_Init(void);
 void SCH_Update(void);
 void SCH_Dispatch_Tasks(void);
-uint32_t SCH_Add_Tasks(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD);
-uint8_t SCH_Delete_Tasks(uint32_t taskID);
-void SCH_Shift_Tasks(uint32_t taskID);
+void SCH_Add_Tasks(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD);
+void SCH_Delete_Tasks(int taskID);
+void SCH_Shift_Tasks(int taskID);
 
 #endif /* INC_SCHEDULER_H_ */

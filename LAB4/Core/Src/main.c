@@ -97,10 +97,10 @@ int main(void)
   SCH_Init();
 
   SCH_Add_Tasks(blinkyLed1, 0, 50);
-  SCH_Add_Tasks(blinkyLed2, 50, 100);
-  SCH_Add_Tasks(blinkyLed3, 150, 150);
-  SCH_Add_Tasks(blinkyLed4, 300, 200);
-  SCH_Add_Tasks(blinkyLed5, 500, 250);
+  SCH_Add_Tasks(blinkyLed2, 0, 100);
+  SCH_Add_Tasks(blinkyLed3, 0, 150);
+  SCH_Add_Tasks(blinkyLed4, 0, 200);
+  SCH_Add_Tasks(blinkyLed5, 0, 250);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)

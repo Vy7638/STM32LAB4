@@ -5,20 +5,16 @@
  *      Author: ADMIN
  */
 
-
-
 #include "scheduler.h"
 
 void SCH_Init(void){
-	unsigned char i;
-    for (i = 0; i < SCH_MAX_TASKS; i++) {
+    for (int i = 0; i < SCH_MAX_TASKS; i++) {
         SCH_Delete_Tasks(i);
     }
 }
 void SCH_Update(void){
-	int i = 0;
 	    // NOTE: calculations are in *TICKS* (not milliseconds)
-	    for (i = 0; i < counter; i++) {
+	    for ( int i = 0; i < counter; i++) {
 	        // Check if there is a task at this location
 	        //if (SCH_tasks_G[Index].pTask){
 	            if (SCH_tasks_G[i].Delay == 0) {
@@ -47,39 +43,36 @@ void SCH_Dispatch_Tasks(void){
 	            if (SCH_tasks_G[i].Period == 0){
 	                SCH_Delete_Tasks(i);
 	            }
+	            else {
+	    		}
 	        }
 	    }
-	    HAL_Delay(10);
 }
-uint32_t SCH_Add_Tasks(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD){
+
+void SCH_Add_Tasks(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD){
 	    // Have we reached the end of the list?
-	    if (counter >= SCH_MAX_TASKS){
-	        return SCH_MAX_TASKS;
+	    if (counter < SCH_MAX_TASKS){
+		    SCH_tasks_G[counter].pTask = pFunction;
+		    SCH_tasks_G[counter].Delay = DELAY;
+		    SCH_tasks_G[counter].Period = PERIOD;
+		    SCH_tasks_G[counter].RunMe = 0;
+
+		    counter++;
 	    }
-	    // If we're here, there is a space in the task array
-	    SCH_tasks_G[counter].pTask = pFunction;
-	    SCH_tasks_G[counter].Delay = DELAY;
-	    SCH_tasks_G[counter].Period = PERIOD;
-	    SCH_tasks_G[counter].RunMe = 0;
-	    // return position of task (to allow later deletion)
-	    counter++;
-	    return counter;
 }
-uint8_t SCH_Delete_Tasks(uint32_t taskID){
+void SCH_Delete_Tasks(int taskID){
 	if (taskID < counter - 1){
 		SCH_Shift_Tasks(taskID);
-		return taskID;
 	}
-	else if (taskID == counter){
+	else if (taskID == counter - 1){
 	    SCH_tasks_G[taskID].pTask = 0x0000;
 	    SCH_tasks_G[taskID].Delay = 0;
 	    SCH_tasks_G[taskID].Period = 0;
 	    SCH_tasks_G[taskID].RunMe = 0;
 	    counter--;
-	    return 0; // return status
 	}
 }
-void SCH_Shift_Tasks(uint32_t taskID){
+void SCH_Shift_Tasks(int taskID){
 	while (taskID < counter - 1){
 		SCH_tasks_G[taskID] = SCH_tasks_G[taskID + 1];
 		taskID++;
